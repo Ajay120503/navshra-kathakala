@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
-const faqs = [
+import { ArrowLeft, ChevronDown, ChevronUp, Loader2 } from "lucide-react";
+import usePage from "../../hooks/usePage";
+
+const defaultFaqs = [
   {
     q: "How long does delivery take?",
     a: "Standard delivery takes 5-7 business days across India. Express shipping is available for select products.",
@@ -15,29 +17,28 @@ const faqs = [
     q: "What is your return policy?",
     a: "We accept returns within 7 days of delivery for defective or damaged items. Handcrafted and personalized items cannot be returned unless damaged.",
   },
-  {
-    q: "Do you ship internationally?",
-    a: "Currently, we ship across India. International shipping will be available soon.",
-  },
-  {
-    q: "How do I track my order?",
-    a: "Use the Track Order page with your invoice number. You'll also receive email updates at each stage.",
-  },
-  {
-    q: "What payment methods do you accept?",
-    a: "We accept all major credit/debit cards, UPI, Net Banking via Razorpay, and Cash on Delivery (COD) for select pincodes.",
-  },
-  {
-    q: "How are your products made?",
-    a: "Each product is handcrafted by skilled artisans using traditional techniques combined with modern aesthetics.",
-  },
-  {
-    q: "Can I cancel my order?",
-    a: "Orders can be cancelled within 24 hours of placing. After that, please contact us for assistance.",
-  },
 ];
+
 const FAQ = () => {
+  const { page, loading } = usePage("faq");
   const [open, setOpen] = useState(null);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="w-8 h-8 animate-spin text-primary-500" />
+      </div>
+    );
+  }
+
+  const title = page?.title || "Frequently Asked Questions";
+  const faqs = (
+    page?.faqs && page.faqs.length > 0 ? page.faqs : defaultFaqs
+  ).map((faq) => ({
+    q: faq.question || faq.q,
+    a: faq.answer || faq.a,
+  }));
+
   return (
     <div className="max-w-3xl mx-auto px-4 py-12">
       <Link
@@ -51,7 +52,7 @@ const FAQ = () => {
         animate={{ opacity: 1, y: 0 }}
       >
         <h1 className="text-3xl font-display font-bold text-neutral-900 mb-8">
-          Frequently Asked Questions
+          {title}
         </h1>
         <div className="space-y-3">
           {faqs.map((faq, i) => (

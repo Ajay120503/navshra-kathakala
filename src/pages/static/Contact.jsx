@@ -1,20 +1,36 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Mail, Phone, MapPin, Send } from "lucide-react";
+import { ArrowLeft, Mail, Phone, MapPin, Send, Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
+import usePage from "../../hooks/usePage";
+
 const Contact = () => {
+  const { page, loading } = usePage("contact");
   const [form, setForm] = useState({
     name: "",
     email: "",
     subject: "",
     message: "",
   });
+
+  const contactDetails = page?.contactDetails || {};
+  const title = page?.title || "Contact Us";
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     toast.success("Message sent! We'll get back to you soon.");
     setForm({ name: "", email: "", subject: "", message: "" });
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="w-8 h-8 animate-spin text-primary-500" />
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
       <Link
@@ -28,39 +44,49 @@ const Contact = () => {
         animate={{ opacity: 1, y: 0 }}
       >
         <h1 className="text-3xl font-display font-bold text-neutral-900 mb-8">
-          Contact Us
+          {title}
         </h1>
         <div className="grid md:grid-cols-2 gap-8">
           <div className="space-y-6">
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center">
-                <Mail className="w-5 h-5 text-primary-500" />
+            {contactDetails.email && (
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center">
+                  <Mail className="w-5 h-5 text-primary-500" />
+                </div>
+                <div>
+                  <h3 className="font-medium text-neutral-900">Email</h3>
+                  <p className="text-sm text-neutral-500">
+                    {contactDetails.email}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h3 className="font-medium text-neutral-900">Email</h3>
-                <p className="text-sm text-neutral-500">hello@hadmate.com</p>
+            )}
+            {contactDetails.phone && (
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center">
+                  <Phone className="w-5 h-5 text-primary-500" />
+                </div>
+                <div>
+                  <h3 className="font-medium text-neutral-900">Phone</h3>
+                  <p className="text-sm text-neutral-500">
+                    {contactDetails.phone}
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center">
-                <Phone className="w-5 h-5 text-primary-500" />
+            )}
+            {contactDetails.address && (
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center">
+                  <MapPin className="w-5 h-5 text-primary-500" />
+                </div>
+                <div>
+                  <h3 className="font-medium text-neutral-900">Address</h3>
+                  <p className="text-sm text-neutral-500">
+                    {contactDetails.address}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h3 className="font-medium text-neutral-900">Phone</h3>
-                <p className="text-sm text-neutral-500">+91 98765 43210</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center">
-                <MapPin className="w-5 h-5 text-primary-500" />
-              </div>
-              <div>
-                <h3 className="font-medium text-neutral-900">Address</h3>
-                <p className="text-sm text-neutral-500">
-                  Mumbai, Maharashtra, India
-                </p>
-              </div>
-            </div>
+            )}
           </div>
           <form onSubmit={handleSubmit} className="card p-6 space-y-4">
             <h3 className="text-lg font-semibold text-neutral-900">
