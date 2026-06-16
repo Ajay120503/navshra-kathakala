@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import {
   LayoutDashboard,
   Package,
@@ -27,6 +28,7 @@ const menuItems = [
 
 const AdminSidebar = () => {
   const location = useLocation();
+  const { settings } = useSelector((state) => state.settings);
 
   const isActive = (item) => {
     if (item.exact) return location.pathname === item.path;
@@ -38,7 +40,7 @@ const AdminSidebar = () => {
       <div className="p-4 border-b border-neutral-200">
         <Link to="/admin" className="flex items-center gap-2">
           <span className="text-xl font-display font-bold text-primary-500">
-            Hadmate
+            {settings?.siteName || "Hadmate"}
           </span>
           <span className="text-xs bg-primary-100 text-primary-700 px-2 py-0.5 rounded-full font-medium">
             Admin

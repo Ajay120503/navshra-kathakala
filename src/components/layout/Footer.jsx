@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Instagram, Facebook, Send, Mail, Phone, MapPin } from "lucide-react";
 
 const defaultProps = {
@@ -10,8 +11,15 @@ const defaultProps = {
 };
 
 export default function Footer(props) {
+  const { settings } = useSelector((state) => state.settings);
+
   const { siteName, tagline, copyrightText, socialLinks, contactInfo } = {
-    ...defaultProps,
+    siteName: settings?.siteName || defaultProps.siteName,
+    tagline: settings?.tagline || defaultProps.tagline,
+    copyrightText:
+      settings?.footer?.copyrightText || defaultProps.copyrightText,
+    socialLinks: settings?.footer?.socialLinks || defaultProps.socialLinks,
+    contactInfo: settings?.contactInfo || defaultProps.contactInfo,
     ...props,
   };
 
@@ -161,7 +169,9 @@ export default function Footer(props) {
         {/* Bottom Bar */}
         <div className="mt-12 border-t border-neutral-800 pt-8 flex flex-col items-center justify-between gap-4 sm:flex-row">
           <p className="text-sm text-neutral-500">{copyrightText}</p>
-          <p className="text-sm text-neutral-500">Handcrafted with ❤️</p>
+          <p className="text-sm text-neutral-500">
+            {tagline || "Handcrafted with ❤️"}
+          </p>
         </div>
       </div>
     </footer>
