@@ -200,16 +200,16 @@ const Home = () => {
               >
                 <div className="relative max-w-md sm:max-w-lg lg:max-w-none mx-auto">
                   {heroProducts.length > 0 ? (
-                    <div className="grid grid-cols-2 gap-4 sm:gap-5">
+                    <div className="grid grid-cols-2 gap-5 sm:gap-5">
                       {heroProducts.map((p, i) => (
                         <Link
                           key={p._id}
                           to={`/shop/${p.slug}`}
                           className={`group relative block rounded-3xl overflow-hidden bg-white border border-neutral-200 shadow-sm hover:shadow-xl transition-all duration-300
-                      ${i === 0 ? "lg:translate-y-6" : ""}
+                      ${i === 0 ? "lg:translate-y-2" : ""}
                       ${i === 1 ? "lg:-translate-y-4" : ""}
                       ${i === 2 ? "lg:-translate-y-2" : ""}
-                      ${i === 3 ? "lg:translate-y-8" : ""}
+                      ${i === 3 ? "lg:translate-y-6" : ""}
                     `}
                         >
                           <div className="aspect-square overflow-hidden bg-neutral-50">
