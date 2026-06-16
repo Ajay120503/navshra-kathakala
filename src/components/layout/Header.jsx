@@ -194,18 +194,6 @@ const Header = () => {
         <div className="grid grid-cols-[auto_1fr_auto] lg:grid-cols-[auto_1fr_auto] items-center gap-3 sm:gap-4 h-16 lg:h-20">
           {/* Left: Mobile menu + Logo */}
           <div className="flex items-center gap-2 min-w-0">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              aria-label="Toggle menu"
-              className="lg:hidden p-2 -ml-2 rounded-md text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 transition-colors"
-            >
-              {isOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
-            </button>
-
             <Link
               to="/"
               className="flex items-center gap-2 shrink-0 min-w-0"
@@ -426,6 +414,17 @@ const Header = () => {
                 </span>
               )}
             </Link>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle menu"
+              className="lg:hidden p-2 ml-1 rounded-full text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 transition-colors"
+            >
+              {isOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </button>
           </div>
         </div>
 
