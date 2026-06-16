@@ -206,7 +206,7 @@ const Header = () => {
                   className="h-8 lg:h-10 w-auto"
                 />
               ) : (
-                <span className="text-xl sm:text-2xl font-display font-bold text-primary-500 truncate">
+                <span className="text-xl sm:text-2xl font-display font-extrabold text-primary-500 truncate">
                   {settings?.siteName || "Hadmate"}
                 </span>
               )}
